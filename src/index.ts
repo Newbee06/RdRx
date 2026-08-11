@@ -31,7 +31,7 @@ function getContentType(path: string): string {
 		pdf: 'application/pdf',
 		zip: 'application/zip',
 		gz: 'application/gzip',
-		7z: 'application/x-7z-compressed',
+		'7z': 'application/x-7z-compressed',
 
 		mp3: 'audio/mpeg',
 		wav: 'audio/wav',
@@ -54,7 +54,7 @@ function getContentType(path: string): string {
 /**
  * Handle files stored in Cloudflare R2.
  *
- * URL format:
+ * URL:
  *   /files/uploads/example.jpg
  *
  * R2 key:
@@ -63,8 +63,9 @@ function getContentType(path: string): string {
 async function handleFileRequest(request: Request, env: Env): Promise<Response> {
 	const url = new URL(request.url);
 
-	// Remove /files/ from the beginning.
-	const key = decodeURIComponent(url.pathname.slice('/files/'.length));
+	const key = decodeURIComponent(
+		url.pathname.slice('/files/'.length),
+	);
 
 	if (!key) {
 		return new Response('File path is required', {
@@ -83,10 +84,10 @@ async function handleFileRequest(request: Request, env: Env): Promise<Response> 
 
 		const headers = new Headers();
 
-		// Preserve useful R2 metadata.
+		// Preserve R2 metadata.
 		object.writeHttpMetadata(headers);
 
-		// Make sure the browser knows the correct file type.
+		// Set Content-Type when R2 metadata doesn't provide one.
 		if (!headers.get('Content-Type')) {
 			headers.set('Content-Type', getContentType(key));
 		}
@@ -95,10 +96,13 @@ async function handleFileRequest(request: Request, env: Env): Promise<Response> 
 			headers.set('ETag', object.httpEtag);
 		}
 
-		// Allow browser caching for files.
-		headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+		// Cache files for one year.
+		headers.set(
+			'Cache-Control',
+			'public, max-age=31536000, immutable',
+		);
 
-		// HEAD request only returns headers.
+		// HEAD only returns headers.
 		if (request.method === 'HEAD') {
 			return new Response(null, {
 				status: 200,
@@ -127,16 +131,14 @@ export default {
 	async fetch(request: Request, env: Env, ctx: any) {
 		const url = new URL(request.url);
 
-		/*
+		/**
 		 * /files/*
 		 *
-		 * Files are stored in the R2 bucket "rdrx".
-		 *
 		 * Example:
-		 *   https://okx.run/files/uploads/photo.jpg
+		 * https://okx.run/files/uploads/photo.jpg
 		 *
-		 * becomes:
-		 *   R2 key = uploads/photo.jpg
+		 * R2:
+		 * rdrx / uploads/photo.jpg
 		 */
 		if (
 			url.pathname.startsWith('/files/') &&
@@ -145,14 +147,17 @@ export default {
 			return handleFileRequest(request, env);
 		}
 
-		// Initialize database tables once at startup.
+		// Initialize database tables.
 		ctx.waitUntil(
 			initializeTables(env).catch((error) => {
-				console.error('Failed to initialize database tables:', error);
+				console.error(
+					'Failed to initialize database tables:',
+					error,
+				);
 			}),
 		);
 
-		// All other requests continue through the existing router.
+		// Keep all existing RdRx routes.
 		return router(request, env);
 	},
 };
