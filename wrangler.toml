@@ -34,7 +34,7 @@ database_id = "42c61a4b-4fca-4742-9a0f-edd5046b5eed" # Use the actual ID from th
 
 [[kv_namespaces]]
 binding = "KV_RDRX"
-id = "a36a7916aca6496db9a8301d8ad4f895"
+id = "53565900af374a23906a2227af2725ee"
 preview_id = "0c3ffd554cbb4401b00c221424c6d023"
 
 [[r2_buckets]]
