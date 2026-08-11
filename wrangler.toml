@@ -15,7 +15,7 @@ FRONTEND_URL = "https://okx.run"
 SHORT_DOMAIN = "okx.run"
 FROM_EMAIL = "no-reply@go.rdrx.co"
 R2_URL = "https://okx.run/files"
-DISABLE_SIGNUPS = "true"
+DISABLE_SIGNUPS = "false"
 
 # Workers Logs
 [observability]
