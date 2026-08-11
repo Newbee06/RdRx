@@ -31,7 +31,7 @@ database_name = "rdrx"
 database_id = "8dab09a2-61b6-40f4-8f19-99c1a1ee8271"
 
 [[kv_namespaces]]
-binding = "RDRX_KV"
+binding = "KV_RDRX"
 id = "53565900af374a23906a2227af2725ee"
 preview_id = "0c3ffd554cbb4401b00c221424c6d023"
 
