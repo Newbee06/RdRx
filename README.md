@@ -15,7 +15,7 @@
 
 <br>
 
-## 📚 Documentation
+## 📚 Documentation1
 
 **Complete documentation is available at [/static/docs](/static/docs)** or visit the live docs site.
 
