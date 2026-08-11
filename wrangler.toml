@@ -30,7 +30,7 @@ crons = ["0 0 * * *"]
 [[d1_databases]]
 binding = "DB" # This matches the binding name in your Env interface
 database_name = "rdrx"
-database_id = "42c61a4b-4fca-4742-9a0f-edd5046b5eed" # Use the actual ID from the creation command
+database_id = "8dab09a2-61b6-40f4-8f19-99c1a1ee8271" # Use the actual ID from the creation command
 
 [[kv_namespaces]]
 binding = "RDRX_KV"
