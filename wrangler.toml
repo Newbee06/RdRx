@@ -11,15 +11,13 @@ binding = "STATIC"
 
 # Vars
 [vars]
-FRONTEND_URL = "https://rdrx.co"
-SHORT_DOMAIN = "rdrx.co"
+FRONTEND_URL = "https://okx.run"
+SHORT_DOMAIN = "okx.run"
 FROM_EMAIL = "no-reply@go.rdrx.co"
-R2_URL = "https://cdn.rdrx.co"
+R2_URL = "https://okx.run/files"
 DISABLE_SIGNUPS = "true"
 
 # Workers Logs
-# Docs: https://developers.cloudflare.com/workers/observability/logs/workers-logs/
-# Configuration: https://developers.cloudflare.com/workers/observability/logs/workers-logs/#enable-workers-logs
 [observability]
 enabled = true
 
@@ -28,9 +26,9 @@ enabled = true
 crons = ["0 0 * * *"]
 
 [[d1_databases]]
-binding = "DB" # This matches the binding name in your Env interface
+binding = "DB"
 database_name = "rdrx"
-database_id = "8dab09a2-61b6-40f4-8f19-99c1a1ee8271" # Use the actual ID from the creation command
+database_id = "8dab09a2-61b6-40f4-8f19-99c1a1ee8271"
 
 [[kv_namespaces]]
 binding = "RDRX_KV"
